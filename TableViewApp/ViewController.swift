@@ -11,6 +11,9 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let changeLocationVC = ChangeLocationVC()
+
+    
     let locationIcon: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "location")
@@ -121,6 +124,7 @@ class ViewController: UIViewController {
         changeCityButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         changeCityButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
         changeCityButton.widthAnchor.constraint(equalToConstant: 218).isActive = true
+        changeCityButton.addTarget(self, action: #selector(changeLocationPressed), for: .touchUpInside)
         
         self.view.addSubview(tempLabel)
         tempLabel.topAnchor.constraint(equalTo: changeCityButton.bottomAnchor, constant: 45).isActive = true
@@ -171,6 +175,13 @@ class ViewController: UIViewController {
         forecastsButton.widthAnchor.constraint(equalToConstant: 264).isActive = true
         
         
+    }
+    
+    @objc func changeLocationPressed(sender: UIButton!) {
+        //self.navigationController?.pushViewController(changeLocationVC, animated: true)
+        self.present(changeLocationVC, animated: true, completion: nil)
+        //present(changeLocationVC, animated: true)
+        print("Button pressed")
     }
     
     func setTableViewDelegates() {

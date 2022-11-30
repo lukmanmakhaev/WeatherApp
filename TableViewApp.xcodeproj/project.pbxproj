@@ -21,6 +21,7 @@
 		077B03C82932AE8B000DDEFA /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077B03C72932AE8B000DDEFA /* WeatherCell.swift */; };
 		079A548429339C230012ECEA /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079A548329339C230012ECEA /* WeatherModel.swift */; };
 		079A5486293619B10012ECEA /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079A5485293619B10012ECEA /* UIColor+Ext.swift */; };
+		079A54882937C4C50012ECEA /* ChangeLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 079A54872937C4C50012ECEA /* ChangeLocationVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		077B03C72932AE8B000DDEFA /* WeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 		079A548329339C230012ECEA /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		079A5485293619B10012ECEA /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		079A54872937C4C50012ECEA /* ChangeLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLocationVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				077B03A72932666C000DDEFA /* SceneDelegate.swift */,
 				077B03C72932AE8B000DDEFA /* WeatherCell.swift */,
 				077B03A92932666C000DDEFA /* ViewController.swift */,
+				079A54872937C4C50012ECEA /* ChangeLocationVC.swift */,
 				077B03AE2932666D000DDEFA /* Assets.xcassets */,
 				077B03B02932666D000DDEFA /* LaunchScreen.storyboard */,
 				077B03B32932666D000DDEFA /* Info.plist */,
@@ -187,6 +190,7 @@
 				077B03A62932666C000DDEFA /* AppDelegate.swift in Sources */,
 				077B03A82932666C000DDEFA /* SceneDelegate.swift in Sources */,
 				079A5486293619B10012ECEA /* UIColor+Ext.swift in Sources */,
+				079A54882937C4C50012ECEA /* ChangeLocationVC.swift in Sources */,
 				079A548429339C230012ECEA /* WeatherModel.swift in Sources */,
 				077B03C82932AE8B000DDEFA /* WeatherCell.swift in Sources */,
 			);
@@ -332,9 +336,8 @@
 				INFOPLIST_FILE = TableViewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -360,9 +363,8 @@
 				INFOPLIST_FILE = TableViewApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
