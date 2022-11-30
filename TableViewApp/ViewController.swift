@@ -192,6 +192,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let weatherModel = weathers[indexPath.row]
         cell.set(weatherModel: weatherModel)
         cell.backgroundColor = UIColor .clear
+        cell.selectionStyle = .none
+
+        
         
         return cell
         
