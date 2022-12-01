@@ -61,8 +61,6 @@
 				077B03BC2932938F000DDEFA /* Cabin-Bold.ttf */,
 				077B03BE2932939A000DDEFA /* Cabin-Medium.ttf */,
 				077B03C0293293A2000DDEFA /* Cabin-Regular.ttf */,
-				077B03C2293295B3000DDEFA /* Extentions-Utilities */,
-				077B03B929327663000DDEFA /* Model */,
 				077B03A42932666C000DDEFA /* TableViewApp */,
 				077B03A32932666C000DDEFA /* Products */,
 			);
@@ -79,11 +77,11 @@
 		077B03A42932666C000DDEFA /* TableViewApp */ = {
 			isa = PBXGroup;
 			children = (
+				077B03C2293295B3000DDEFA /* Extentions-Utilities */,
+				077B03B929327663000DDEFA /* Model */,
+				079A54892938AF030012ECEA /* Views */,
 				077B03A52932666C000DDEFA /* AppDelegate.swift */,
 				077B03A72932666C000DDEFA /* SceneDelegate.swift */,
-				077B03C72932AE8B000DDEFA /* WeatherCell.swift */,
-				077B03A92932666C000DDEFA /* ViewController.swift */,
-				079A54872937C4C50012ECEA /* ChangeLocationVC.swift */,
 				077B03AE2932666D000DDEFA /* Assets.xcassets */,
 				077B03B02932666D000DDEFA /* LaunchScreen.storyboard */,
 				077B03B32932666D000DDEFA /* Info.plist */,
@@ -108,6 +106,16 @@
 				079A5485293619B10012ECEA /* UIColor+Ext.swift */,
 			);
 			path = "Extentions-Utilities";
+			sourceTree = "<group>";
+		};
+		079A54892938AF030012ECEA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				077B03C72932AE8B000DDEFA /* WeatherCell.swift */,
+				077B03A92932666C000DDEFA /* ViewController.swift */,
+				079A54872937C4C50012ECEA /* ChangeLocationVC.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
