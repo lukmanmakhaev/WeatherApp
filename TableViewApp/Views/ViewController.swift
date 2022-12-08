@@ -9,10 +9,13 @@
 
 import UIKit
 
+
+
 class ViewController: UIViewController {
     
     let changeLocationVC = ChangeLocationVC()
-
+    var weatherManager = WeatherManager()
+    
     
     let locationIcon: UIImageView = {
         let image = UIImageView()
@@ -40,11 +43,12 @@ class ViewController: UIViewController {
         return button
     }()
     
-    let tempLabel: UILabel = {
+    var tempLabel: UILabel = {
         let label = UILabel()
-        label.text = "27"
+        label.text = "--"
         label.textColor = .white
-        label.font = UIFont(name: "Cabin-Bold", size: 161)
+        label.textAlignment = .center
+        label.font = UIFont(name: "Cabin-Bold", size: 140)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -86,7 +90,6 @@ class ViewController: UIViewController {
         return t
         
     }()
-    var weathers: [WeatherModel] = []
     
     let forecastsButton: UIButton = {
         let button = UIButton()
@@ -98,15 +101,21 @@ class ViewController: UIViewController {
         return button
     }()
     
-
+    var weathersList: [WeatherModel.WeatherItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
-        weathers = fetchData()
+        weatherManager.delegate = self
+        weatherManager.fetchWeather()
+        //weathersList = fetchWeatherList()
+
+        print(weathersList.count)
         initView()
                 
     }
-        
+
+    
     func initView() {
         
         self.view.addSubview(locationIcon)
@@ -129,19 +138,20 @@ class ViewController: UIViewController {
         self.view.addSubview(tempLabel)
         tempLabel.topAnchor.constraint(equalTo: changeCityButton.bottomAnchor, constant: 45).isActive = true
         tempLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        tempLabel.heightAnchor.constraint(equalToConstant: 115).isActive = true
-        tempLabel.widthAnchor.constraint(equalToConstant: 175).isActive = true
+        tempLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        //tempLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
         
         self.view.addSubview(describtionLabel)
         describtionLabel.topAnchor.constraint(equalTo: tempLabel.bottomAnchor, constant: 35).isActive = true
         describtionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        describtionLabel.heightAnchor.constraint(equalToConstant: 37).isActive = true
+        describtionLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         self.view.addSubview(secondButton)
         secondButton.topAnchor.constraint(equalTo: describtionLabel.bottomAnchor, constant: 31).isActive = true
         secondButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         secondButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
         secondButton.widthAnchor.constraint(equalToConstant: 137).isActive = true
+        secondButton.addTarget(self, action: #selector(descriptionButtonPressed), for: .touchUpInside)
         
         self.view.addSubview(moreDetailsLabel)
         moreDetailsLabel.topAnchor.constraint(equalTo: secondButton.bottomAnchor, constant: 47).isActive = true
@@ -177,12 +187,20 @@ class ViewController: UIViewController {
         
     }
     
+    
+
+    
     @objc func changeLocationPressed(sender: UIButton!) {
-        //self.navigationController?.pushViewController(changeLocationVC, animated: true)
         self.present(changeLocationVC, animated: true, completion: nil)
-        //present(changeLocationVC, animated: true)
         print("Button pressed")
+        
     }
+    
+    @objc func descriptionButtonPressed(sender: UIButton!) {
+        print("descriptionButtonPressed")
+        print(weathersList)
+    }
+
     
     func setTableViewDelegates() {
         tableView.delegate = self
@@ -190,35 +208,47 @@ class ViewController: UIViewController {
     }
 
 }
+
+
  
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weathers.count
+    @objc func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return weathersList.count
         
     }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    @objc func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherCell") as! WeatherCell
-        let weatherModel = weathers[indexPath.row]
-        cell.set(weatherModel: weatherModel)
+        let weather = weathersList[indexPath.row]
+        
+        cell.set(weatherItem: weather)
         cell.backgroundColor = UIColor .clear
         cell.selectionStyle = .none
-
-        
-        
         return cell
         
     }
-   
 }
 
-extension ViewController {
-    func fetchData() -> [WeatherModel] {
-        let weather1 = WeatherModel(conditionId: 804, description: "Overcast",tempMin: 10.22, tempMax: 11.39)
-        let weather2 = WeatherModel(conditionId: 500, description: "Light",tempMin: 10.22, tempMax: 11.50)
-        let weather3 = WeatherModel(conditionId: 500, description: "Light rain",tempMin: 10.87, tempMax: 10.42)
-        
-        return [weather1, weather2, weather3]
+extension ViewController: WeatherManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.weathersList = weather.weathersArray
+            self.tempLabel.text = weather.weathersArray[0].tempMinString
+            self.describtionLabel.text = weather.weathersArray[0].description
+            self.tableView.reloadData()
+        }
+    }
+    
+    func didFailWithError(_ error: Error) {
+        print(error)
     }
 }
+
+/*extension ViewController {
+    func fetchWeatherList() -> [WeatherModel.WeatherItem] {
+        //print(weathersList.count)
+        print(weathersList)
+        return weathersList
+    }
+}*/
