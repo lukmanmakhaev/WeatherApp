@@ -31,25 +31,25 @@ class WeatherCell: UITableViewCell {
         addSubview(conditionIcon)
         addSubview(descriptionLabel)
         addSubview(tempRate)
-
+        
         configureConditionIcon()
         configureDescriptionLabel()
         configureTempRateLabel()
-
+        
         setConditionIconConstraints()
         setDescriptionLabelConstraints()
         setTempRateConstraints()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has no been implemented")
     }
     
-    func set(weatherModel: WeatherModel) {
-        conditionIcon.image = weatherModel.condition
-        descriptionLabel.text = weatherModel.description
-        tempRate.text = weatherModel.tempRate
+    func set(weatherItem: WeatherModel.WeatherItem) {
+
+        conditionIcon.image = weatherItem.condition
+        descriptionLabel.text = weatherItem.description
+        tempRate.text = "\(weatherItem.tempMinString)º / \(weatherItem.tempMaxString)º"
     }
     
     
@@ -91,3 +91,22 @@ class WeatherCell: UITableViewCell {
     }
     
 }
+
+
+/*extension WeatherCell: WeatherManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel) {
+        DispatchQueue.main.async {
+
+            self.tempRate.text = weather.tempRate
+            self.descriptionLabel.text = weather.description
+            self.conditionIcon.image = weather.condition
+            //print(weather.listItems)
+
+        }
+    }
+    
+    func didFailWithError(_ error: Error) {
+        print(error)
+    }
+    
+}*/
