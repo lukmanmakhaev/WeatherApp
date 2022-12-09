@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol ChangeLocationVCDelegate {
+    func changeCity(city: String)
+}
 
 class ChangeLocationVC: UIViewController {
-    
+    //var viewController = ViewController()
+    var delegate: ChangeLocationVCDelegate?
+
     let label: UILabel = {
         let label = UILabel()
         label.text = "Type your location📍"
@@ -17,8 +22,7 @@ class ChangeLocationVC: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    
+  
     let textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter text here"
@@ -28,15 +32,16 @@ class ChangeLocationVC: UIViewController {
         return textField
     }()
     
+    var city: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         textField.delegate = self
+        //viewController.delegate = self
         initView()
-                
     }
-    
-    
+  
     func initView() {
         
         view.addSubview(label)
@@ -49,14 +54,9 @@ class ChangeLocationVC: UIViewController {
         textField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50).isActive = true
         textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 26).isActive = true
         textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -26).isActive = true
-        
-        
-        
     }
     
-    
 }
-
 
 extension ChangeLocationVC: UITextFieldDelegate {
     
@@ -79,9 +79,11 @@ extension ChangeLocationVC: UITextFieldDelegate {
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        print(textField.text!)
+        //self.city = textField.text
+        self.delegate?.changeCity(city: textField.text!)
         textField.text = ""
         self.dismiss(animated: true)
     }
     
 }
+

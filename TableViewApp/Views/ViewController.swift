@@ -9,14 +9,11 @@
 
 import UIKit
 
-
-
 class ViewController: UIViewController {
     
     let changeLocationVC = ChangeLocationVC()
     var weatherManager = WeatherManager()
-    
-    
+
     let locationIcon: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "location")
@@ -26,7 +23,7 @@ class ViewController: UIViewController {
     
     let locationLabel: UILabel = {
         let label = UILabel()
-        label.text = "London"
+        label.text = "--"
         label.font = UIFont(name: "Cabin-Medium", size: 37)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +52,7 @@ class ViewController: UIViewController {
     
     let describtionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Cloudy"
+        label.text = "--"
         label.textColor = .white
         label.font = UIFont(name: "Cabin-Medium", size: 34)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -107,14 +104,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         weatherManager.delegate = self
-        weatherManager.fetchWeather()
-        //weathersList = fetchWeatherList()
+        changeLocationVC.delegate = self
+        tableView.reloadData()
 
         print(weathersList.count)
         initView()
-                
     }
-
     
     func initView() {
         
@@ -175,9 +170,7 @@ class ViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -127).isActive = true
         tableView.isScrollEnabled = false
         /////////////////////////////
-        
-        
-        
+ 
         self.view.addSubview(forecastsButton)
         forecastsButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30).isActive = true
         forecastsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -187,30 +180,21 @@ class ViewController: UIViewController {
         
     }
     
-    
-
-    
     @objc func changeLocationPressed(sender: UIButton!) {
         self.present(changeLocationVC, animated: true, completion: nil)
-        print("Button pressed")
         
     }
     
     @objc func descriptionButtonPressed(sender: UIButton!) {
-        print("descriptionButtonPressed")
-        print(weathersList)
+    
     }
 
-    
     func setTableViewDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
     }
-
 }
 
-
- 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weathersList.count
@@ -245,10 +229,9 @@ extension ViewController: WeatherManagerDelegate {
     }
 }
 
-/*extension ViewController {
-    func fetchWeatherList() -> [WeatherModel.WeatherItem] {
-        //print(weathersList.count)
-        print(weathersList)
-        return weathersList
+
+extension ViewController: ChangeLocationVCDelegate {
+    func changeCity(city: String) {
+        weatherManager.fetchWeather(cityName: city)
     }
-}*/
+}
