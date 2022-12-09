@@ -16,19 +16,19 @@ protocol WeatherManagerDelegate {
 
 struct WeatherManager {
 
-    let weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?id=524901&appid=63fa8b0b8a58d9ed68ebe8b23511bdd2&cnt=7&units=metric&q=london"
+    let weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?id=524901&appid=63fa8b0b8a58d9ed68ebe8b23511bdd2&cnt=7&units=metric"
 
     var delegate: WeatherManagerDelegate?
     
-    /*func fetchWeather(cityName: String) {
+    func fetchWeather(cityName: String) {
         let urlString = "\(weatherUrl)&q=\(cityName)"
         performRequest(with: urlString)
-    }*/
-    
-    
-    func fetchWeather() {
-        performRequest(with: weatherUrl)
     }
+    
+    
+    /*func fetchWeather() {
+        performRequest(with: weatherUrl)
+    }*/
     
     
     func performRequest(with urlString: String) {
@@ -52,12 +52,7 @@ struct WeatherManager {
             task.resume()
         }
     }
-    
-    
-    
-    
-    
-    
+
     func parseJSON(json: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
@@ -66,37 +61,13 @@ struct WeatherManager {
             let decodedData = try decoder.decode(Weathers.self, from: json)
             let list = decodedData.list
             
-            //let listItems = [list.inde]
-            //print(list)
-
-        
-            
-            
-            //let listMain = list[0].main
-            //let listWeather = list[0].weather[0]
-            
-            //
-            
-          
-            //let id = listWeather.id
-            //let descr = listWeather.description
-            //let tempMin = listMain.temp_min
-            //let tempMax = listMain.temp_max
-            
-            
-            //let cityName = decodedData.city.name
             var weathersList = [WeatherModel.WeatherItem]()
             
             for (index, _) in list.enumerated() {
-                //print(index)
+                
                 weathersList.append(WeatherModel.WeatherItem(conditionId: list[index].weather[0].id, description: list[index].weather[0].description, tempMin: list[index].main.temp_min, tempMax: list[index].main.temp_max))
             }
             
-            //print(weathersList)
-            
-            
-            
-        
             let weathers = WeatherModel(weathersArray: weathersList)
             
             return weathers
