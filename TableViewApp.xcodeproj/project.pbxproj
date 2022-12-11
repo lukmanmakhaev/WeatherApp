@@ -120,7 +120,6 @@
 				077B03C72932AE8B000DDEFA /* WeatherCell.swift */,
 				077B03A92932666C000DDEFA /* ViewController.swift */,
 				079A54872937C4C50012ECEA /* ChangeLocationVC.swift */,
-				079A548F29391DB10012ECEA /* WeatherManager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +127,7 @@
 		079A548A2938B0060012ECEA /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				079A548F29391DB10012ECEA /* WeatherManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

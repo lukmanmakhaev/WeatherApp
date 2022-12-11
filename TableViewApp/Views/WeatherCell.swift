@@ -9,7 +9,14 @@ import UIKit
 
 class WeatherCell: UITableViewCell {
     
-    var conditionIcon = UIImageView()
+    var conditionIcon: UIImageView = {
+        let icon = UIImageView()
+        icon.tintColor = .white
+        icon.contentMode = .scaleAspectFit
+        return icon
+    }()
+    
+    
     
     var descriptionLabel: UILabel = {
         let label = UILabel()
@@ -47,8 +54,8 @@ class WeatherCell: UITableViewCell {
     
     func set(weatherItem: WeatherModel.WeatherItem) {
 
-        conditionIcon.image = weatherItem.condition
-        descriptionLabel.text = weatherItem.description
+        conditionIcon.image = UIImage(systemName: weatherItem.condition)?.withRenderingMode(.alwaysTemplate)
+        descriptionLabel.text = weatherItem.dayAndDesc
         tempRate.text = "\(weatherItem.tempMinString)º / \(weatherItem.tempMaxString)º"
     }
     
@@ -91,22 +98,3 @@ class WeatherCell: UITableViewCell {
     }
     
 }
-
-
-/*extension WeatherCell: WeatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel) {
-        DispatchQueue.main.async {
-
-            self.tempRate.text = weather.tempRate
-            self.descriptionLabel.text = weather.description
-            self.conditionIcon.image = weather.condition
-            //print(weather.listItems)
-
-        }
-    }
-    
-    func didFailWithError(_ error: Error) {
-        print(error)
-    }
-    
-}*/

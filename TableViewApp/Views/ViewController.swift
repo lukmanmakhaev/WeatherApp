@@ -45,7 +45,17 @@ class ViewController: UIViewController {
         label.text = "--"
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: "Cabin-Bold", size: 140)
+        label.font = UIFont(name: "Cabin-Bold", size: 130)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var OLabel: UILabel = {
+        let label = UILabel()
+        label.text = "ºC"
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont(name: "Cabin-Bold", size: 40)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -61,7 +71,7 @@ class ViewController: UIViewController {
     
     let secondButton: UIButton = {
         let button = UIButton()
-        button.setTitle("AQI 14", for: .normal)
+        button.setTitle("Hmdty: ", for: .normal)
         button.backgroundColor = UIColor.init(hexString: "FFB200")
         button.titleLabel?.font = UIFont(name: "Cabin-Medium", size: 23)
         button.layer.cornerRadius = 21
@@ -69,14 +79,14 @@ class ViewController: UIViewController {
         return button
     }()
     
-    let moreDetailsLabel: UILabel = {
+    /*let moreDetailsLabel: UILabel = {
         let label = UILabel()
         label.text = "More details >"
         label.textColor = .white
         label.font = UIFont(name: "Cabin-Medium", size: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
+    }()*/
     
     
     var tableView: UITableView = {
@@ -107,7 +117,6 @@ class ViewController: UIViewController {
         changeLocationVC.delegate = self
         tableView.reloadData()
 
-        print(weathersList.count)
         initView()
     }
     
@@ -127,14 +136,19 @@ class ViewController: UIViewController {
         changeCityButton.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 7).isActive = true
         changeCityButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         changeCityButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
-        changeCityButton.widthAnchor.constraint(equalToConstant: 218).isActive = true
+        changeCityButton.widthAnchor.constraint(equalToConstant: 190).isActive = true
         changeCityButton.addTarget(self, action: #selector(changeLocationPressed), for: .touchUpInside)
         
         self.view.addSubview(tempLabel)
         tempLabel.topAnchor.constraint(equalTo: changeCityButton.bottomAnchor, constant: 45).isActive = true
         tempLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        tempLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        tempLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
         //tempLabel.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        
+        self.view.addSubview(OLabel)
+        OLabel.topAnchor.constraint(equalTo: changeCityButton.bottomAnchor, constant: 15).isActive = true
+        OLabel.leadingAnchor.constraint(equalTo: tempLabel.trailingAnchor, constant: 10).isActive = true
+        OLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         self.view.addSubview(describtionLabel)
         describtionLabel.topAnchor.constraint(equalTo: tempLabel.bottomAnchor, constant: 35).isActive = true
@@ -145,13 +159,13 @@ class ViewController: UIViewController {
         secondButton.topAnchor.constraint(equalTo: describtionLabel.bottomAnchor, constant: 31).isActive = true
         secondButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         secondButton.heightAnchor.constraint(equalToConstant: 42).isActive = true
-        secondButton.widthAnchor.constraint(equalToConstant: 137).isActive = true
+        secondButton.widthAnchor.constraint(equalToConstant: 145).isActive = true
         secondButton.addTarget(self, action: #selector(descriptionButtonPressed), for: .touchUpInside)
         
-        self.view.addSubview(moreDetailsLabel)
+        /*self.view.addSubview(moreDetailsLabel)
         moreDetailsLabel.topAnchor.constraint(equalTo: secondButton.bottomAnchor, constant: 47).isActive = true
         moreDetailsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44).isActive = true
-        moreDetailsLabel.heightAnchor.constraint(equalToConstant: 42).isActive = true
+        moreDetailsLabel.heightAnchor.constraint(equalToConstant: 42).isActive = true*/
         
            
         
@@ -164,18 +178,18 @@ class ViewController: UIViewController {
         //register cells
         tableView.register(WeatherCell.self, forCellReuseIdentifier: "WeatherCell")
         //set constraints
-        tableView.topAnchor.constraint(equalTo: moreDetailsLabel.topAnchor, constant: 30).isActive = true
+        tableView.topAnchor.constraint(equalTo: secondButton.topAnchor, constant: 60).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 21).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -44).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -127).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -21).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
         tableView.isScrollEnabled = false
         /////////////////////////////
  
-        self.view.addSubview(forecastsButton)
+        /*self.view.addSubview(forecastsButton)
         forecastsButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 30).isActive = true
         forecastsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         forecastsButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        forecastsButton.widthAnchor.constraint(equalToConstant: 264).isActive = true
+        forecastsButton.widthAnchor.constraint(equalToConstant: 264).isActive = true*/
         
         
     }
@@ -218,8 +232,9 @@ extension ViewController: WeatherManagerDelegate {
     func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async {
             self.weathersList = weather.weathersArray
-            self.tempLabel.text = weather.weathersArray[0].tempMinString
+            self.tempLabel.text = weather.weathersArray[0].tempString
             self.describtionLabel.text = weather.weathersArray[0].description
+            self.secondButton.setTitle(weather.weathersArray[0].humidityString, for: .normal)
             self.tableView.reloadData()
         }
     }
@@ -232,6 +247,7 @@ extension ViewController: WeatherManagerDelegate {
 
 extension ViewController: ChangeLocationVCDelegate {
     func changeCity(city: String) {
+        self.locationLabel.text = city
         weatherManager.fetchWeather(cityName: city)
     }
 }

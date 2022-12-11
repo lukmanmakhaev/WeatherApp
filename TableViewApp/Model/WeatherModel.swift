@@ -19,26 +19,47 @@ struct WeatherModel {
     
     struct WeatherItem {
         
-        
+        let dt: Int
         let conditionId: Int
         let description: String
+        let temp: Double
         let tempMin: Double
         let tempMax: Double
+        let hmdty: Int
         
         //var temperatureString: String {
         //let string = String(format: "%.1f", temp)
         //return string
         //}
+    
         
-        
-        var tempMaxString: String {
-            let string = String(format: "%.1f", tempMax)
+        var humidityString: String {
+            let string = String("Hmdty: \(hmdty)")
             return string
         }
         
-        var tempMinString: String {
-            let string = String(format: "%.1f", tempMin)
+        var tempString: String {
+            let string = String(format: "%.1f", temp)
             return string
+        }
+        
+        
+        var tempMaxString: String {
+            switch tempMax{
+            case -0.9..<1:
+                return "0"
+            default:
+                return String(format: "%.0f", tempMax)
+            }
+        }
+        
+        var tempMinString: String {
+            switch tempMin{
+            case -0.9..<1:
+                return "0"
+            default:
+                return String(format: "%.0f", tempMin)
+            }
         }
         
         var tempRate: String {
@@ -46,24 +67,48 @@ struct WeatherModel {
             return string
         }
         
-        var condition: UIImage {
+        var weekDay: String {
+            return createDateTime(timestamp: String(dt))
+        }
+        
+        var dayAndDesc: String {
+            return "\(weekDay) • \(description)"
+        }
+        
+        func createDateTime(timestamp: String) -> String {
+            var strDate: String?
+                
+            if let unixTime = Double(timestamp) {
+                let date = Date(timeIntervalSince1970: unixTime)
+                let dateFormatter = DateFormatter()
+                let timezone = TimeZone.current.abbreviation() ?? "CET"  // get current TimeZone abbreviation or set to CET
+                dateFormatter.timeZone = TimeZone(abbreviation: timezone) //Set timezone that you want
+                dateFormatter.locale = NSLocale.current
+                dateFormatter.dateFormat = "HH:mm" //Specify your format that you want
+                strDate = dateFormatter.string(from: date)
+            }
+                
+            return strDate!
+        }
+        
+        var condition: String {
             switch conditionId {
             case 200...232:
-                return Images.thunderstorm
+                return "cloud.bolt"
             case 300...321:
-                return Images.hail
+                return "cloud.hail"
             case 500...531:
-                return Images.rain
+                return "cloud.rain"
             case 600...622:
-                return Images.snow
+                return "cloud.snow"
             case 700...781:
-                return Images.fog
+                return "cloud.fog"
             case 800:
-                return Images.sun
+                return "sun.max"
             case 801...804:
-                return Images.cloud
+                return "cloud"
             default:
-                return Images.cloud
+                return "cloud"
             }
         }
     }
