@@ -25,12 +25,6 @@ struct WeatherManager {
         performRequest(with: urlString)
     }
     
-    
-    /*func fetchWeather() {
-        performRequest(with: weatherUrl)
-    }*/
-    
-    
     func performRequest(with urlString: String) {
         // 1.Create URL
         if let url = URL(string: urlString) {
@@ -65,7 +59,7 @@ struct WeatherManager {
             
             for (index, _) in list.enumerated() {
                 
-                weathersList.append(WeatherModel.WeatherItem(conditionId: list[index].weather[0].id, description: list[index].weather[0].description, tempMin: list[index].main.temp_min, tempMax: list[index].main.temp_max))
+                weathersList.append(WeatherModel.WeatherItem(dt: list[index].dt, conditionId: list[index].weather[0].id, description: list[index].weather[0].main, temp: list[index].main.temp, tempMin: list[index].main.temp_min, tempMax: list[index].main.temp_max, hmdty: list[index].main.humidity))
             }
             
             let weathers = WeatherModel(weathersArray: weathersList)
